@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createEnquiry } from '../services/enquiryService';
+import { useToast } from '../context/ToastContext';
 
 const initialForm = { name: '', email: '', phone: '', subject: '', message: '' };
 
@@ -9,7 +10,7 @@ const validate = (values) => {
     errors.name = 'Name must be at least 2 characters';
   }
   if (!values.email.trim() || !/^\S+@\S+\.\S+$/.test(values.email)) {
-    errors.email = 'Please provide a valid email';
+    errors.email = 'Please provide a valid email address';
   }
   if (!values.phone.trim() || !/^\+?[\d\s\-()]{7,20}$/.test(values.phone)) {
     errors.phone = 'Please provide a valid phone number';
@@ -28,6 +29,7 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
+  const addToast = useToast();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +51,7 @@ export default function Contact() {
     setLoading(true);
     try {
       await createEnquiry(form);
-      setStatus({ type: 'success', message: 'Enquiry submitted successfully! We will get back to you soon.' });
+      addToast('Enquiry submitted successfully! We will get back to you soon.', 'success');
       setForm(initialForm);
     } catch (err) {
       const msg =
@@ -60,6 +62,9 @@ export default function Contact() {
     }
   };
 
+  const inputClass = (field) =>
+    `input-field ${errors[field] ? 'input-error' : ''}`;
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,7 +74,7 @@ export default function Contact() {
               Contact Us
             </h1>
             <p className="text-lg text-gray-600">
-              Have a question or want to discuss a project? We'd love to hear from you.
+              Have a question or want to discuss a project? We&apos;d love to hear from you.
             </p>
           </div>
 
@@ -80,6 +85,7 @@ export default function Contact() {
                   ? 'bg-green-50 text-green-800 border border-green-200'
                   : 'bg-red-50 text-red-800 border border-red-200'
               }`}
+              role="alert"
             >
               {status.message}
             </div>
@@ -89,7 +95,7 @@ export default function Contact() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Name *
+                  Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="name"
@@ -97,16 +103,16 @@ export default function Contact() {
                   type="text"
                   value={form.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border ${
-                    errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition`}
+                  className={inputClass('name')}
                   placeholder="John Doe"
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
                 />
-                {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+                {errors.name && <p id="name-error" className="mt-1 text-sm text-red-600">{errors.name}</p>}
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email *
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="email"
@@ -114,19 +120,19 @@ export default function Contact() {
                   type="email"
                   value={form.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border ${
-                    errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition`}
+                  className={inputClass('email')}
                   placeholder="john@example.com"
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
                 />
-                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                {errors.email && <p id="email-error" className="mt-1 text-sm text-red-600">{errors.email}</p>}
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone *
+                  Phone <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="phone"
@@ -134,16 +140,16 @@ export default function Contact() {
                   type="tel"
                   value={form.phone}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border ${
-                    errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition`}
+                  className={inputClass('phone')}
                   placeholder="+1 (555) 123-4567"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? 'phone-error' : undefined}
                 />
-                {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+                {errors.phone && <p id="phone-error" className="mt-1 text-sm text-red-600">{errors.phone}</p>}
               </div>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                  Subject *
+                  Subject <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="subject"
@@ -151,18 +157,18 @@ export default function Contact() {
                   type="text"
                   value={form.subject}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border ${
-                    errors.subject ? 'border-red-300 ring-1 ring-red-300' : 'border-gray-300'
-                  } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition`}
+                  className={inputClass('subject')}
                   placeholder="How can we help?"
+                  aria-invalid={!!errors.subject}
+                  aria-describedby={errors.subject ? 'subject-error' : undefined}
                 />
-                {errors.subject && <p className="mt-1 text-sm text-red-600">{errors.subject}</p>}
+                {errors.subject && <p id="subject-error" className="mt-1 text-sm text-red-600">{errors.subject}</p>}
               </div>
             </div>
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                Message *
+                Message <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="message"
@@ -170,20 +176,30 @@ export default function Contact() {
                 rows={5}
                 value={form.message}
                 onChange={handleChange}
-                className={`w-full px-4 py-2.5 rounded-lg border ${
-                  errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-gray-300'
-                } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition resize-y`}
+                className={`${inputClass('message')} resize-y`}
                 placeholder="Tell us about your project..."
+                aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? 'message-error' : undefined}
               />
-              {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
+              {errors.message && <p id="message-error" className="mt-1 text-sm text-red-600">{errors.message}</p>}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full md:w-auto px-8 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="btn-primary w-full md:w-auto inline-flex items-center gap-2"
             >
-              {loading ? 'Submitting...' : 'Submit Enquiry'}
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Submitting...
+                </>
+              ) : (
+                'Submit Enquiry'
+              )}
             </button>
           </form>
 

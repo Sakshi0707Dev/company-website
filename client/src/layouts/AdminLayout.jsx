@@ -7,7 +7,7 @@ export default function AdminLayout() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('admin');
-    navigate('/admin/login');
+    navigate('/');
   };
 
   return (
@@ -16,16 +16,26 @@ export default function AdminLayout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate('/')}
+                className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                title="Back to website"
+                aria-label="Back to website"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+              </button>
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">A</span>
               </div>
               <span className="text-lg font-bold text-gray-900">Admin Dashboard</span>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">{admin.name || 'Admin'}</span>
+              <span className="text-sm text-gray-600 hidden sm:inline">{admin.name || 'Admin'}</span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                className="btn-secondary text-sm"
               >
                 Logout
               </button>

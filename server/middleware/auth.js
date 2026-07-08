@@ -32,15 +32,25 @@ const protect = catchAsync(async (req, res, next) => {
     return next(new AppError('Not authorized, no token provided', 401));
   }
 
-  const decoded = jwt.verify(token, env.JWT_SECRET);
-  const admin = await Admin.findById(decoded.id);
+  try {
+    const decoded = jwt.verify(token, env.JWT_SECRET);
+    const admin = await Admin.findById(decoded.id);
 
-  if (!admin) {
-    return next(new AppError('Admin belonging to this token no longer exists', 401));
+    if (!admin) {
+      return next(new AppError('Admin belonging to this token no longer exists', 401));
+    }
+
+    req.admin = admin;
+    next();
+  } catch (jwtError) {
+    if (jwtError.name === 'TokenExpiredError') {
+      return next(new AppError('Session expired. Please login again.', 401));
+    }
+    if (jwtError.name === 'JsonWebTokenError') {
+      return next(new AppError('Invalid token. Please login again.', 401));
+    }
+    return next(new AppError('Authentication failed. Please login again.', 401));
   }
-
-  req.admin = admin;
-  next();
 });
 
 module.exports = { protect, handleValidationErrors };

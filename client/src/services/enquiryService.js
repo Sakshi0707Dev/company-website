@@ -10,11 +10,6 @@ export const getEnquiries = async (params = {}) => {
   return data;
 };
 
-export const getEnquiry = async (id) => {
-  const { data } = await api.get(`/enquiries/${id}`);
-  return data;
-};
-
 export const updateEnquiry = async (id, formData) => {
   const { data } = await api.put(`/enquiries/${id}`, formData);
   return data;
