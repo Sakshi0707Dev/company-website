@@ -53,7 +53,6 @@ company-website/
 │   ├── utils/                  # AppError, catchAsync
 │   ├── app.js                  # Express app setup
 │   └── server.js               # Entry point
-├── .env.example
 └── README.md
 ```
 
@@ -77,7 +76,6 @@ company-website/
 ```json
 {
   "success": true,
-  "message": "Login successful",
   "token": "eyJhbGciOiJIUzI1NiIs...",
   "admin": {
     "id": "...",
@@ -141,7 +139,7 @@ company-website/
 
 2. **Set up environment variables**
    ```bash
-   cp .env.example server/.env
+   cp server/.env.example server/.env
    ```
    Edit `server/.env` with your MongoDB URI and desired JWT secret.
 
@@ -158,16 +156,23 @@ company-website/
    ```
    Server starts on `http://localhost:5000`
 
-5. **Start the frontend**
+5. **Start the frontend (development)**
    ```bash
    cd client
    npm run dev
    ```
    Client starts on `http://localhost:3000`
 
-6. **Access the application**
-   - Website: `http://localhost:3000`
-   - Admin Login: `http://localhost:3000/admin/login`
+6. **Start in production (single server)**
+   ```bash
+   cd server
+   NODE_ENV=production npm run dev
+   ```
+   The built client is served from `http://localhost:5000`
+
+7. **Access the application**
+   - Website: `http://localhost:3000` (dev) or `http://localhost:5000` (production)
+   - Admin Login: `/admin/login`
    - Default credentials: `admin@company.com` / `Admin@123`
 
 ## Environment Variables
