@@ -137,7 +137,7 @@ Protected routes require a valid JWT token.
 Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone git clone https://github.com/Sakshi0707Dev/company-website.git
 ```
 
 Move inside project
@@ -204,31 +204,20 @@ npm run dev
 Frontend:
 
 ```
-http://localhost:3000
-```
+https://company-website-amber-five.vercel.app
 
 Backend:
-
-```
-http://localhost:5000
-```
+https://company-website-rx01.onrender.com
 
 ---
 
-# 👨‍💻 Default Admin Credentials
+## Demo Admin Credentials
 
-**Email**
-
-```
+Email:
 admin@company.com
-```
 
-**Password**
-
-```
+Password:
 Admin@123
-```
-
 ---
 
 # 🔍 Search Feature
