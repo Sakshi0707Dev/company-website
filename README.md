@@ -4,48 +4,6 @@ A full-stack company website built as an internship assessment using the MERN st
 
 ---
 
-# 🌐 Live Demo
-
-Frontend: *(Add after deployment)*
-
-Backend API: *(Add after deployment)*
-
----
-
-# 📂 GitHub Repository
-
-(Add your GitHub repository link here)
-
----
-
-# 📸 Screenshots
-
-## Home Page
-
-(Add screenshot)
-
-## About Page
-
-(Add screenshot)
-
-## Services Page
-
-(Add screenshot)
-
-## Contact Page
-
-(Add screenshot)
-
-## Admin Login
-
-(Add screenshot)
-
-## Admin Dashboard
-
-(Add screenshot)
-
----
-
 # ✨ Features
 
 ## Public Website
@@ -206,29 +164,22 @@ npm install
 
 # ⚙ Environment Variables
 
-Create
+Create:
 
 ```
 server/.env
 ```
 
-Example
+Example:
 
 ```env
 PORT=5000
-
 NODE_ENV=development
-
 MONGO_URI=your_mongodb_connection_string
-
 JWT_SECRET=your_secret_key
-
 JWT_EXPIRES_IN=7d
-
 ADMIN_NAME=Admin
-
 ADMIN_EMAIL=admin@company.com
-
 ADMIN_PASSWORD=Admin@123
 ```
 
@@ -240,7 +191,6 @@ Backend
 
 ```bash
 cd server
-
 npm run dev
 ```
 
@@ -248,17 +198,16 @@ Frontend
 
 ```bash
 cd client
-
 npm run dev
 ```
 
-Frontend
+Frontend:
 
 ```
 http://localhost:3000
 ```
 
-Backend
+Backend:
 
 ```
 http://localhost:5000
@@ -268,15 +217,15 @@ http://localhost:5000
 
 # 👨‍💻 Default Admin Credentials
 
-```
-Email
+**Email**
 
+```
 admin@company.com
 ```
 
-```
-Password
+**Password**
 
+```
 Admin@123
 ```
 
@@ -284,7 +233,7 @@ Admin@123
 
 # 🔍 Search Feature
 
-The admin dashboard supports searching enquiries by
+The admin dashboard supports searching enquiries by:
 
 - Name
 - Email
@@ -307,7 +256,7 @@ The admin dashboard supports searching enquiries by
 
 # 📱 Responsive Design
 
-The application is fully responsive for
+The application is fully responsive for:
 
 - Desktop
 - Laptop
@@ -346,15 +295,6 @@ The application is fully responsive for
 # 👩 Author
 
 **Sakshi Gaikwad**
-
-GitHub:
-(Add Link)
-
-LinkedIn:
-(Add Link)
-
-Email:
-(Add Email)
 
 ---
 
