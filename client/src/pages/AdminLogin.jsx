@@ -10,6 +10,9 @@ export default function AdminLogin() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    console.log("handleSubmit");
+    console.log("Event type:", e.type);
+    console.log("Current target:", e.currentTarget?.tagName);
     e.preventDefault();
     setError('');
 
@@ -20,7 +23,9 @@ export default function AdminLogin() {
 
     setLoading(true);
     try {
+      console.log("Calling login API with:", { email, password: "***" });
       const res = await login(email, password);
+      console.log("login API response:", res);
       localStorage.setItem('token', res.token);
       localStorage.setItem('admin', JSON.stringify(res.admin));
       navigate('/admin/dashboard');
@@ -101,6 +106,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
+            onClick={() => console.log("Button clicked")}
             className="btn-primary w-full"
           >
             {loading ? (
